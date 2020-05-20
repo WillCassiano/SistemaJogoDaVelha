@@ -1,0 +1,54 @@
+﻿@page
+@{
+    ViewData["Title"] = "Jogo";
+}
+
+    <div class="d-flex flex-row">
+        <div class="w-25" id="div-usuarios">
+            <div class="row pl-2 pr-2">
+                <div class="input-group">
+                    <input class="form-control" type="text" id="userName" placeholder="Nome de usuário" />
+                    <div class="input-group-prepend">
+                        <button class="btn btn-outline-info" onclick="entrarUsuario()" disabled id="entrarUsuario">Entrar</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <h5>Usuários Online</h5>
+            </div>
+            <div class="row">
+                <button class="btn btn-sm btn-danger" onclick="spamAll()">Notificar Todos</button>
+                <button class="btn btn-sm btn-warning" onclick="spamOthers()">Notificar</button>
+            </div>
+
+            <div class="row mt-4">
+                <ul id="listaUsuarios">
+                </ul>
+            </div>
+        </div>
+
+        <div class="w-25 pl-4" id="div-salas">
+            <h5>Salas</h5>
+            <div class="card border-success">
+                <div class="card-body border-success">
+                    <h5>Sala 1</h5>
+                    <p class="card-text">Jogadores</p>
+                    <ol id="sala1-jogadores">
+                    </ol>
+                </div>
+            </div>
+            <div class="card-footer border-success">
+                <a href="#" onclick="entrarSala(1)" class="card-link">Entrar</a>
+                <a href="#" onclick="spamGroup(1)" class="card-link">Notificar</a>
+            </div>
+        </div>
+
+        @*<div class="w-50" id="div-jogo">
+            Jogo
+        </div>*@
+
+    </div>
+
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/principal.js"></script>
