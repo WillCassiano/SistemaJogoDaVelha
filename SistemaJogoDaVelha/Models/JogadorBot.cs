@@ -38,7 +38,7 @@ namespace SistemaJogoDaVelha.Models
                 var numeroJaJogado = _sala.CasasClicadas.FirstOrDefault(p => p.Numero == numeroJogar);
                 if (numeroJaJogado == null)
                 {
-                    return numeroJogado;
+                    return numeroJogar;
                 }
             }            
         }

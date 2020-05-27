@@ -3,6 +3,7 @@ using SistemaJogoDaVelha.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace SistemaJogoDaVelha.Hubs
@@ -65,7 +66,7 @@ namespace SistemaJogoDaVelha.Hubs
 
             await Groups.AddToGroupAsync(Context.ConnectionId, sala.Id.ToString());
 
-            await Clients.All.SendAsync("SalaAlterada", sala);
+            await Clients.All.SendAsync("SalasAlteradas", _salas);
 
             await Reiniciar(sala.Id);
 
@@ -87,6 +88,24 @@ namespace SistemaJogoDaVelha.Hubs
             if (sala.TemGanhador)
             {
                 await Clients.Group(sala.Id.ToString()).SendAsync("JogadorGanhou", sala.GanhadorRodada, sala.GanhadorRodadaNome);
+            }
+            else
+            {
+                Thread.Sleep(600);
+
+                if (sala.JogadorDaVez == "O" && sala.Jogadores[1].Nome == "Bot" && sala.CasasClicadas.Count < 9)
+                {
+                    JogadorBot bot = (JogadorBot)sala.Jogadores[1];
+                    var numeroBot = bot.Jogar();
+                    sala.CasasClicadas.Add(new Casa() { Jogador = bot.Marcacao, Numero = numeroBot});
+                    sala.JogadorDaVez = "X";
+                    await Clients.Group(sala.Id.ToString()).SendAsync("AlterarVez", sala, numeroBot);
+                }
+
+                if (sala.TemGanhador)
+                {
+                    await Clients.Group(sala.Id.ToString()).SendAsync("JogadorGanhou", sala.GanhadorRodada, sala.GanhadorRodadaNome);
+                }
             }
         }
 
@@ -125,9 +144,29 @@ namespace SistemaJogoDaVelha.Hubs
             sala.Jogadores.Add(bot);
             await Groups.AddToGroupAsync(Context.ConnectionId, sala.Id.ToString());
 
-            await Clients.All.SendAsync("SalaAlterada", sala);
+            await Clients.All.SendAsync("SalasAlteradas", _salas);
 
             await Clients.Group(sala.Id.ToString()).SendAsync("EntrouSala", sala, bot);
+        }
+
+        public async override Task OnDisconnectedAsync(Exception exception)
+        {
+            var usuario = usuarioLogados.Keys.FirstOrDefault(p => p == Context.ConnectionId);
+            if (usuario != null)
+            {
+                var salaUsuario = _salas.FirstOrDefault(p => p.Jogadores.FirstOrDefault(j => j.Id == Context.ConnectionId) != null);
+
+                if (salaUsuario != null)
+                {
+                    var jogador = salaUsuario.Jogadores.First(p => p.Id == Context.ConnectionId);
+                    salaUsuario.Jogadores.Remove(jogador);
+                }
+
+                usuarioLogados.Remove(Context.ConnectionId);
+
+                await Clients.All.SendAsync("UsuariosLogados", usuarioLogados.Values);
+                await Clients.All.SendAsync("SalasAlteradas", _salas);
+            }
         }
     }
 }

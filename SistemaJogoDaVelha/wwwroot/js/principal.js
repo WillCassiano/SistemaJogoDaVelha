@@ -26,14 +26,17 @@ connection.on("SalaFechada", salaId => {
     alert(`Sala ${salaId} está fechada`);
 });
 
-connection.on("SalaAlterada", sala => {
-    var lista = document.getElementById(`sala${sala.id}-jogadores`);
-    lista.innerText = '';
-    for (var jogador of sala.jogadores) {
-        var li = document.createElement('li');
-        li.textContent = jogador.nome;
+connection.on("SalasAlteradas", salas => {
+    for (var sala of salas) {
+        console.log(sala);
+        var lista = document.getElementById(`sala${sala.id}-jogadores`);
+        lista.innerText = '';
+        for (var jogador of sala.jogadores) {
+            var li = document.createElement('li');
+            li.textContent = jogador.nome;
 
-        lista.appendChild(li);
+            lista.appendChild(li);
+        }
     }
 });
 
