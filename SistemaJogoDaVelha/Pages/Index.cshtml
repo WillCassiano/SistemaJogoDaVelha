@@ -44,9 +44,59 @@
             </div>
         </div>
 
-        @*<div class="w-50" id="div-jogo">
-            Jogo
-        </div>*@
+        <div class="w-50 pl-4" id="div-jogo" style="visibility:hidden">
+            <h5>Jogo</h5>
+            <div class="row">
+                <div class="col-6">
+                    <p id="jogador1">Jogador X: Aguardando...</p>
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-sm btn-secondary" onclick="reiniciarJogo()">Reiniciar</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <p id="jogador2">Jogador O: Aguardando...</p>
+                </div>
+                <div class="col-2">
+                    <button class="btn btn-sm btn-secondary" onclick="adicionarBot()">Adicionar Bot</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="casa border border-success" id="casa1" onclick="opcaoJogada(1)">
+
+                </div>
+                <div class="casa border border-success" id="casa2" onclick="opcaoJogada(2)">
+
+                </div>
+                <div class="casa border border-success" id="casa3" onclick="opcaoJogada(3)">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="casa border border-success" id="casa4" onclick="opcaoJogada(4)">
+
+                </div>
+                <div class="casa border border-success" id="casa5" onclick="opcaoJogada(5)">
+
+                </div>
+                <div class="casa border border-success" id="casa6" onclick="opcaoJogada(6)">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="casa border border-success" id="casa7" onclick="opcaoJogada(7)">
+
+                </div>
+                <div class="casa border border-success" id="casa8" onclick="opcaoJogada(8)">
+
+                </div>
+                <div class="casa border border-success" id="casa9" onclick="opcaoJogada(9)">
+
+                </div>
+            </div>
+        </div>
 
     </div>
 

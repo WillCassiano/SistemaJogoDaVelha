@@ -5,10 +5,9 @@ using System.Threading.Tasks;
 
 namespace SistemaJogoDaVelha.Models
 {
-    public class Jogador
+    public class Casa
     {
-        public string Id { get; set; }
-        public string Nome { get; set; }
-        public string Marcacao { get; set; }
+        public string Jogador { get; set; }
+        public int Numero { get; set; }
     }
 }
